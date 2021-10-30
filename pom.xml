@@ -22,6 +22,13 @@
 			<artifactId>maven-source-plugin</artifactId>
 			<version>3.2.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
@@ -66,18 +73,11 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>1.7.1</version>
+
 				<executions>
+
 					<execution>
 						<phase>package</phase>
 						<goals>
@@ -86,10 +86,12 @@
 					</execution>
 				</executions>
 				<configuration>
+					<forceCreation>true</forceCreation>
 					<shadedArtifactAttached>true</shadedArtifactAttached>
 					<shadedClassifierName>shaded</shadedClassifierName>
 					<transformers>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<mainClass>generador.pdf.App</mainClass>
 						</transformer>
 					</transformers>
@@ -107,8 +109,9 @@
 							<goal>launch4j</goal>
 						</goals>
 						<configuration>
+							<forceCreation>true</forceCreation>
 							<headerType>gui</headerType>
-							<jar>${project.build.directory}/${artifactId}-${version}-shaded.jar</jar>
+							<jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
 							<outfile>${project.build.directory}/generadorpdf.exe</outfile>
 							<downloadUrl>http://java.com/download</downloadUrl>
 							<classPath>
@@ -139,6 +142,7 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
+					<forceCreation>true</forceCreation>
 					<archive>
 						<manifest>
 							<mainClass>generador.pdf.App</mainClass>
@@ -154,7 +158,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<release>11</release>
+					<forceCreation>true</forceCreation>
+					<release>15</release>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -165,6 +170,7 @@
 					<execution>
 						<id>default-cli</id>
 						<configuration>
+							<forceCreation>true</forceCreation>
 							<mainClass>generador.pdf.App</mainClass>
 						</configuration>
 					</execution>
@@ -179,9 +185,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<!-- -->
-
 			<plugin>
 				<!-- copy all dependencies of your app to target folder -->
 				<groupId>org.apache.maven.plugins</groupId>
@@ -192,6 +195,7 @@
 						<id>copy-dependencies</id>
 						<phase>package</phase>
 						<configuration>
+							<forceCreation>true</forceCreation>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
@@ -207,6 +211,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.2.0</version>
 				<configuration>
+				<forceCreation>true</forceCreation>
 					<outputDirectory>${project.build.directory}/dist/lib</outputDirectory>
 					<archive>
 						<manifestEntries>
@@ -223,5 +228,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
